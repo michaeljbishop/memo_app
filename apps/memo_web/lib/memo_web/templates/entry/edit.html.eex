@@ -1,0 +1,14 @@
+<h2>Edit <%= @id %></h2>
+
+<%= form_for @conn, entry_path(@conn, :update, @id), [as: :entry, method: :put], fn f -> %>
+  <div class="form-group">
+    <div>
+      <%= label f, :value, class: "control-label" %>
+      <%= text_input f, :value, value: @value %>
+      <%= error_tag f, :key %>
+    </div>
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<span><%= link "Back", to: entry_path(@conn, :index) %></span>

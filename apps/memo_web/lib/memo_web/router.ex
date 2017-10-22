@@ -17,6 +17,8 @@ defmodule MemoWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/entries_new", EntryController, :new
+    resources "/entries", EntryController, except: [:new]
   end
 
   # Other scopes may use custom stacks.

@@ -1,0 +1,20 @@
+<h2>New</h2>
+
+<%= form_for @conn, entry_path(@conn, :create), [as: :entry], fn f -> %>
+  <div class="form-group">
+    <div>
+      <%= label f, :key, class: "control-label" %>
+      <%= text_input f, :key %>
+      <%= error_tag f, :key %>
+    </div>
+    <div>
+      <%= label f, :value, class: "control-label" %>
+      <%= label f, :value %>
+      <%= text_input f, :value %>
+      <%= error_tag f, :key %>
+    </div>
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<span><%= link "Back", to: entry_path(@conn, :index) %></span>

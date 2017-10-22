@@ -7,8 +7,8 @@ use Mix.Config
 
 # General application configuration
 config :memo_web,
-  namespace: MemoWeb,
-  ecto_repos: [MemoWeb.Repo]
+  namespace: MemoWeb
+#   ecto_repos: [MemoWeb.Repo]
 
 # Configures the endpoint
 config :memo_web, MemoWeb.Endpoint,

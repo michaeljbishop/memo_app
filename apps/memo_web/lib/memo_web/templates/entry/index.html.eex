@@ -1,0 +1,25 @@
+<h2>All</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for {key, value} <- @entries do %>
+    <tr>
+      <td><%= key %></td>
+      <td><%= value %></td>
+      <td class="text-right">
+        <span><%= link "Show", to: entry_path(@conn, :show, key), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: entry_path(@conn, :edit, key), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: entry_path(@conn, :delete, key), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New", to: entry_path(@conn, :new) %></span>
