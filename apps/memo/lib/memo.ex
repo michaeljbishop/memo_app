@@ -4,6 +4,10 @@ defmodule Memo do
   
   # === Client API ===
   
+  def all() do
+    GenServer.call(__MODULE__, :all)
+  end
+
   def set(key, value) do
     GenServer.call(__MODULE__, {:set, key, value})
   end
@@ -31,6 +35,10 @@ defmodule Memo do
     Logger.debug "Started Memo"
     state = %{}
     {:ok, state}
+  end
+  
+  def handle_call(:all, _from, state) do
+    {:reply, {:ok, state}, state}
   end
   
   def handle_call({:set, key, value}, _from, state) do
