@@ -11,6 +11,8 @@ defmodule Memo.Application do
     # List all child processes to be supervised
     children = [
       supervisor(Memo.Repo, []),
+      supervisor(Memo.EntryJobSupervisor, []),
+      worker(Registry, [:unique, Registry.Memo]),
       worker(Memo, []),
     ]
 

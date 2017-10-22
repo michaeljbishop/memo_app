@@ -19,6 +19,7 @@ defmodule MemoWeb.Router do
     get "/", PageController, :index
     get "/entries_new", EntryController, :new
     resources "/entries", EntryController, except: [:new]
+    get "/entries/:id/start_job", EntryController, :start_job
   end
 
   # Other scopes may use custom stacks.

@@ -2,7 +2,9 @@
 
 <ul>
 <h3><%= @value %></h3>
+<h3><%= job_progress_string(@job_progress) %></h3>
 </ul>
 
-<span><%= link "Edit", to: entry_path(@conn, :edit, @id) %></span>
-<span><%= link "Back", to: entry_path(@conn, :index) %></span>
+<span><%= link "Edit", to: entry_path(@conn, :edit, @id) %></span> |
+<span><%= link "Back", to: entry_path(@conn, :index) %></span> |
+<span><%= link "Start Job", to: entry_path(@conn, :start_job, @id) %></span>
