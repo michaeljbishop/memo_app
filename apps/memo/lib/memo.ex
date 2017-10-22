@@ -61,14 +61,16 @@ defmodule Memo do
     {:reply, {:ok, state.entries}, state}
   end
 
-  def handle_call({:set, key, value}, _from, %{entries: entries} = state) do
+  def handle_call({:set, key, value}, from, %{entries: entries} = state) do
     Entry.upsert(key, value)
 
     entries = Map.put(entries, key, value)
 
+    GenServer.reply(from, :ok)
+
     notify_subscribers(state.callbacks, {:updated, key, value})
 
-    {:reply, :ok, Map.put(state, :entries, entries)}
+    {:noreply, Map.put(state, :entries, entries)}
   end
 
   def handle_call({:get, key}, _from, %{entries: entries} = state) do
@@ -85,19 +87,23 @@ defmodule Memo do
     {:reply, keys, state}
   end
 
-  def handle_call({:delete, key}, _from, %{entries: entries} = state) do
+  def handle_call({:delete, key}, from, %{entries: entries} = state) do
 
-    {reply, new_state} = if Map.has_key?(entries, key) do
+    new_state = if Map.has_key?(entries, key) do
+      GenServer.reply(from, {:ok, key})
+
       Entry.delete(key)
       {key, entries} = Map.pop(entries, key)
 
       notify_subscribers(state.callbacks, {:deleted, key})
 
-      {{:ok, key}, Map.put(state, :entries, entries)}
+      Map.put(state, :entries, entries)
     else
-      {{:error, :no_key}, state}
+      GenServer.reply(from, {:error, :no_key})
+      state
     end
-    {:reply, reply, new_state}
+
+    {:noreply, new_state}
   end
 
   def handle_call({:add_callback, module, function, args}, _from, state) do
